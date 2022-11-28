@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+/* eslint-disabl e max-len */
 
 /*
   Hook this script to index.html
@@ -11,7 +12,9 @@
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
 function getRandomIntInclusive(min, max) {
+  // eslint-disable-next-line no-param-reassign
   min = Math.ceil(min);
+  // eslint-disable-next-line no-param-reassign
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
@@ -22,7 +25,7 @@ function injectHTML(list) {
   target.innerHTML = '';
   const listEl = document.createElement('ol');
   target.appendChild(listEl);
-  list.forEach((item) => { 
+  list.forEach((item) => {
     const el = document.createElement('li');
     el.innerText = item.name;
     listEl.appendChild(el);
@@ -46,10 +49,11 @@ function injectHTML(list) {
 function processRestaurants(list) {
   console.log('fired restaurants list');
   const range = [...Array(15).keys()];
+  // eslint-disable-next-line no-unused-vars
   const newArray = range.map((item) => {
     const index = getRandomIntInclusive(0, list.length);
     return list[index];
-  })
+  });
   return newArray;
   /*
     ## Process Data Separately From Injecting It

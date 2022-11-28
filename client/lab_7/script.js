@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-return-assign */
-/* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
 /* eslint-disabl e max-len */
 
@@ -15,7 +12,9 @@
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
 function getRandomIntInclusive(min, max) {
+  // eslint-disable-next-line no-param-reassign
   min = Math.ceil(min);
+  // eslint-disable-next-line no-param-reassign
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
@@ -50,6 +49,7 @@ function injectHTML(list) {
 function processRestaurants(list) {
   console.log('fired restaurants list');
   const range = [...Array(15).keys()];
+  // eslint-disable-next-line no-unused-vars
   const newArray = range.map((item) => {
     const index = getRandomIntInclusive(0, list.length);
     return list[index];
@@ -74,14 +74,13 @@ function processRestaurants(list) {
       - Return the new list of 15 restaurants so we can work on it separately in the HTML injector
     */
 }
-
 function filterList(array, filterInputValue) {
-  return newArray = array.filter((item) => {
-    if (!item.name) { return; }
+  const newArray = array.filter((item) => {
     const lowerCaseName = item.name.toLowerCase();
-    const lowerCaseQuery = item.name.toLowerCase();
+    const lowerCaseQuery = filterInputValue.toLowerCase();
     return lowerCaseName.includes(lowerCaseQuery);
   });
+  return newArray;
 }
 
 async function mainEvent() {
@@ -122,37 +121,37 @@ async function mainEvent() {
   console.log(`${arrayFromJson.data[0].name} ${arrayFromJson.data[0].category}`);
 
   // This IF statement ensures we can't do anything if we don't have information yet
-  if (!arrayFromJson.data?.length) {
+  if (arrayFromJson.data?.length > 0) {
     submit.style.display = 'block'; // let's turn the submit button back on by setting it to display as a block when we have data available
-  }
 
-  loadAnimation.classList.remove('lds-ellipsis');
-  loadAnimation.classList.add('lds-ellipsis_hidden');
+    loadAnimation.classList.remove('lds-ellipsis');
+    loadAnimation.classList.add('lds-ellipsis_hidden');
 
-  let currentList = [];
+    let currentList = [];
 
-  form.addEventListener('input', (event) => {
-    console.log('input', event.target.value);
-    const filteredList = filterList(currentList, event.target.value);
-    injectHTML(filteredList);
-  });
+    form.addEventListener('input', (event) => {
+      console.log('input', event.target.value);
+      const newFilterList = filterList(currentList, event.target.value);
+      injectHTML(newFilterList);
+    });
 
-  // And here's an eventListener! It's listening for a "submit" button specifically being clicked
-  // this is a synchronous event event, because we already did our async request above, and waited for it to resolve
-  form.addEventListener('submit', (submitEvent) => {
+    // And here's an eventListener! It's listening for a "submit" button specifically being clicked
+    // this is a synchronous event event, because we already did our async request above, and waited for it to resolve
+    form.addEventListener('submit', (submitEvent) => {
     // This is needed to stop our page from changing to a new URL even though it heard a GET request
-    submitEvent.preventDefault();
+      submitEvent.preventDefault();
 
-    // This constant will have the value of your 15-restaurant collection when it processes
-    currentList = processRestaurants(arrayFromJson.data);
+      // This constant will have the value of your 15-restaurant collection when it processes
+      currentList = processRestaurants(arrayFromJson.data);
 
-    // And this function call will perform the "side effect" of injecting the HTML list for you
-    injectHTML(currentList);
+      // And this function call will perform the "side effect" of injecting the HTML list for you
+      injectHTML(currentList);
 
     // By separating the functions, we open the possibility of regenerating the list
     // without having to retrieve fresh data every time
     // We also have access to some form values, so we could filter the list based on name
-  });
+    });
+  }
 }
 
 /*
