@@ -319,7 +319,15 @@
     margin: 1rem;
     padding: 1.5rem;
   }
-  
+  /* MAP STYLES */
+  #map {
+      display: block;
+      width: 400px;
+      height: 380px;
+      border: 2px dashed rgb(99,99,99);
+      margin-bottom: 1rem;
+  }
+
   .right_section {
     background-color: #2D3142;
     flex: 1 2 auto;
