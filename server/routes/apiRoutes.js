@@ -3,8 +3,7 @@ import express from 'express';
 import path from 'path';
 
 import foodServiceRoutes from './foodServiceRoutes.js';
-import sqlDemoRoutes from './sqlDemoRoutes.js';
-import libraryServiceRoutes from './' // this is included in case you want to use a database of your own for the group project
+import sqlDemoRoutes from './sqlDemoRoutes.js'; // this is included in case you want to use a database of your own for the group project
 
 const router = express.Router();
 
